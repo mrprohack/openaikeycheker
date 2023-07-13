@@ -61,6 +61,8 @@ if api_key_file:
         with open(output_file, 'w') as file:
             file.write('\n'.join(valid_api_keys))
         print(colored(f"Valid API keys saved to '{output_file}' and Number of valid API keys: {valid_count}.", 'blue'))
+    else:
+        print(colored(f"Number of valid API keys: {valid_count}.", 'blue'))
 
 # Print help menu if no arguments are provided
 if not (single_key or api_key_file):
