@@ -35,6 +35,10 @@ To use the API Key Validator, follow these steps:
 ```sh
 python api_key_validator.py -f api_keys.txt -o valid_api_keys.txt
 ```
+```sh
+python api_key_validator.py -s sk-**************************
+```
+
 Replace `api_keys.txt` with the path to your API key file, and `valid_api_keys.txt` with the desired path to save the valid API keys (optional).
 4. The script will check the validity of each API key and display the result in the terminal. Valid keys will be printed in green, while invalid keys will be printed in red.
 5. If you provided an output file, the valid API keys will be saved to that file.
