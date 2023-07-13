@@ -1,4 +1,6 @@
 import openai
+import argparse
+from termcolor import colored
 
 # Function to check if an API key is valid
 def is_valid_api_key(api_key):
@@ -13,16 +15,46 @@ def is_valid_api_key(api_key):
         return False
 
 # Read API keys from a text file
-api_key_file = 'api_keys.txt'  # Replace with your file path
-valid_api_file = 'valid_api_keys.txt'  # Replace with the desired path for the valid API keys file
+def read_api_keys_from_file(filename):
+    with open(filename, 'r') as file:
+        api_keys = file.read().splitlines()
+    return api_keys
 
-with open(api_key_file, 'r') as file:
-    with open(valid_api_file, 'w') as valid_file:
-        for line in file:
-            api_key = line.strip()
-            if is_valid_api_key(api_key):
-                print(f"API Key {api_key} is valid.")
-                valid_file.write(api_key + '\n')
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='Check the validity of API keys')
+parser.add_argument('-f', '--api_key_file', required=True, help='Path to the file containing API keys')
+parser.add_argument('-s', '--single_key', help='API key to check')
+parser.add_argument('-o', '--output_file', help='Path to save the valid API keys')
+args = parser.parse_args()
 
-print("Valid API keys saved to 'valid_api_keys.txt'.")
+api_key_file = args.api_key_file
+output_file = args.output_file
+single_key = args.single_key  # Add this line to assign the single_key variable
+
+# Read API keys from the file
+api_keys = read_api_keys_from_file(api_key_file)
+
+# List to store valid API keys
+valid_api_keys = []
+
+# Check a single API key if provided
+if single_key:
+    if is_valid_api_key(single_key):
+        print(colored(f"API Key {single_key} is valid.", 'green'))
+    else:
+        print(colored(f"API Key {single_key} is invalid.", 'red'))
+
+# Iterate over API keys and check validity
+for api_key in api_keys:
+    if is_valid_api_key(api_key):
+        valid_api_keys.append(api_key)
+        print(colored(f"API Key {api_key} is valid.", 'green'))
+    else:
+        print(colored(f"API Key {api_key} is invalid.", 'red'))
+
+# Save valid API keys to a file if output_file is provided
+if output_file:
+    with open(output_file, 'w') as file:
+        file.write('\n'.join(valid_api_keys))
+    print(colored(f"Valid API keys saved to '{output_file}'.", 'green'))
 
