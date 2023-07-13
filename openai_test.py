@@ -22,20 +22,14 @@ def read_api_keys_from_file(filename):
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Check the validity of API keys')
-parser.add_argument('-f', '--api_key_file', required=True, help='Path to the file containing API keys')
 parser.add_argument('-s', '--single_key', help='API key to check')
+parser.add_argument('-f', '--api_key_file', help='Path to the file containing API keys')
 parser.add_argument('-o', '--output_file', help='Path to save the valid API keys')
 args = parser.parse_args()
 
+single_key = args.single_key
 api_key_file = args.api_key_file
 output_file = args.output_file
-single_key = args.single_key  # Add this line to assign the single_key variable
-
-# Read API keys from the file
-api_keys = read_api_keys_from_file(api_key_file)
-
-# List to store valid API keys
-valid_api_keys = []
 
 # Check a single API key if provided
 if single_key:
@@ -44,17 +38,31 @@ if single_key:
     else:
         print(colored(f"API Key {single_key} is invalid.", 'red'))
 
-# Iterate over API keys and check validity
-for api_key in api_keys:
-    if is_valid_api_key(api_key):
-        valid_api_keys.append(api_key)
-        print(colored(f"API Key {api_key} is valid.", 'green'))
-    else:
-        print(colored(f"API Key {api_key} is invalid.", 'red'))
+# Check API keys from a file if provided
+if api_key_file:
+    # Read API keys from the file
+    api_keys = read_api_keys_from_file(api_key_file)
 
-# Save valid API keys to a file if output_file is provided
-if output_file:
-    with open(output_file, 'w') as file:
-        file.write('\n'.join(valid_api_keys))
-    print(colored(f"Valid API keys saved to '{output_file}'.", 'green'))
+    # List to store valid API keys
+    valid_api_keys = []
+    valid_count = 0
+
+    # Iterate over API keys and check validity
+    for api_key in api_keys:
+        if is_valid_api_key(api_key):
+            valid_api_keys.append(api_key)
+            print(colored(f"API Key {api_key} is valid.", 'green'))
+            valid_count += 1
+        else:
+            print(colored(f"API Key {api_key} is invalid.", 'red'))
+
+    # Save valid API keys to a file if output_file is provided
+    if output_file:
+        with open(output_file, 'w') as file:
+            file.write('\n'.join(valid_api_keys))
+        print(colored(f"Valid API keys saved to '{output_file}' and Number of valid API keys: {valid_count}.", 'blue'))
+
+# Print help menu if no arguments are provided
+if not (single_key or api_key_file):
+    parser.print_help()
 
