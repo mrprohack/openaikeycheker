@@ -14,6 +14,7 @@ def is_valid_api_key(api_key):
         #print(f"API Key {api_key} exceeded the rate limit. Skipping...")
         return False
     except KeyboardInterrupt:
+        print("Keyboard interrupt detected. Stopped...")
         exit()
 # Read API keys from a text file
 def read_api_keys_from_file(filename):
