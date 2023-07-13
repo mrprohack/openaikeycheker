@@ -11,7 +11,7 @@ def is_valid_api_key(api_key):
     except openai.error.AuthenticationError:
         return False
     except openai.error.RateLimitError:
-        print(f"API Key {api_key} exceeded the rate limit. Skipping...")
+        #print(f"API Key {api_key} exceeded the rate limit. Skipping...")
         return False
 
 # Read API keys from a text file
