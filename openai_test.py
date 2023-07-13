@@ -45,14 +45,20 @@ if api_key_file:
 
     # List to store valid API keys
     valid_api_keys = []
+<<<<<<< HEAD
     valid_count = 0
+=======
+>>>>>>> 043ab77c4c3ce9bbf01ca5971be4552b045a14fb
 
     # Iterate over API keys and check validity
     for api_key in api_keys:
         if is_valid_api_key(api_key):
             valid_api_keys.append(api_key)
             print(colored(f"API Key {api_key} is valid.", 'green'))
+<<<<<<< HEAD
             valid_count += 1
+=======
+>>>>>>> 043ab77c4c3ce9bbf01ca5971be4552b045a14fb
         else:
             print(colored(f"API Key {api_key} is invalid.", 'red'))
 
@@ -60,7 +66,11 @@ if api_key_file:
     if output_file:
         with open(output_file, 'w') as file:
             file.write('\n'.join(valid_api_keys))
+<<<<<<< HEAD
         print(colored(f"Valid API keys saved to '{output_file}' and Number of valid API keys: {valid_count}.", 'blue'))
+=======
+        print(colored(f"Valid API keys saved to '{output_file}'.", 'green'))
+>>>>>>> 043ab77c4c3ce9bbf01ca5971be4552b045a14fb
 
 # Print help menu if no arguments are provided
 if not (single_key or api_key_file):
