@@ -13,7 +13,8 @@ def is_valid_api_key(api_key):
     except openai.error.RateLimitError:
         #print(f"API Key {api_key} exceeded the rate limit. Skipping...")
         return False
-
+    except KeyboardInterrupt:
+        exit()
 # Read API keys from a text file
 def read_api_keys_from_file(filename):
     with open(filename, 'r') as file:
