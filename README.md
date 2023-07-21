@@ -1,4 +1,4 @@
-# API Key Validator
+# OPENAI API Key Validator
 
 A Python script to check the validity of OpenAI API keys.
 
